@@ -1,22 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomeIndexScreen from '../screens/HomeStack/HomeIndexScreen'
 import HoroscopeScreen from '../screens/HomeStack/HoroscopeScreen'
+import { screenOptions } from './options'
 
 const Stack = createNativeStackNavigator()
 
 export default function HomeStack() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTintColor: '#B000B9',
-        headerTitleStyle: {
-          fontSize: 32,
-          fontFamily: 'sans-bold'
-        },
-        headerStyle: { backgroundColor: '#fff' },
-        headerShadowVisible: false
-      }}
-    >
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen
         name="HomeScreen"
         component={HomeIndexScreen}

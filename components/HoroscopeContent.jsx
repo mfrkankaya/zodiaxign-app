@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, ActivityIndicator, Text } from 'react-native'
 import { primary } from '../constants/colors'
+import { paragraph } from '../styles'
 
 const HoroscopeContent = ({ daily, weekly, monthly, activeTab, loading }) => {
   if (loading)
@@ -21,16 +22,7 @@ const HoroscopeContent = ({ daily, weekly, monthly, activeTab, loading }) => {
 
   return (
     <View>
-      <Text
-        style={{
-          fontSize: 16,
-          lineHeight: 24,
-          fontFamily: 'sans-regular',
-          color: '#363436'
-        }}
-      >
-        {content[activeTab]}
-      </Text>
+      <Text style={paragraph}>{content[activeTab]}</Text>
     </View>
   )
 }

@@ -1,4 +1,5 @@
 export * from './analysis'
+export * from './animation'
 export * from './common'
-export * from './image'
 export * from './date'
+export * from './image'

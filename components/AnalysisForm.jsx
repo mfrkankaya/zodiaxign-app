@@ -10,6 +10,7 @@ import {
 import MaskInput from 'react-native-mask-input'
 import { primary } from '../constants/colors'
 import { calculateAge, validateBirthDate } from '../utils'
+import FadeBox from './FadeBox'
 
 const CheckButton = ({ onPress, isActive, text }) => {
   return (
@@ -84,83 +85,93 @@ const AnalysisForm = () => {
   }
 
   return (
-    <View>
-      <TextInput
-        style={styles.input}
-        placeholderTextColor="#898989"
-        placeholder="Ad"
-        value={firstName}
-        onChangeText={setFirstName}
-        returnKeyType="next"
-        onSubmitEditing={() => lastNameRef.current.focus()}
-        autoFocus
-      />
-
-      <View style={{ marginTop: 12 }} />
-
-      <TextInput
-        ref={lastNameRef}
-        style={styles.input}
-        placeholderTextColor="#898989"
-        placeholder="Soyad"
-        value={lastName}
-        onChangeText={setLastName}
-      />
-
-      <View style={{ marginTop: 12 }} />
-
-      <View
-        style={{
-          width: '100%',
-          flexDirection: 'row',
-          justifyContent: 'space-between'
-        }}
-      >
-        <CheckButton
-          text="Kadın"
-          onPress={() => setGender('female')}
-          isActive={gender === 'female'}
+    <View style={{ flex: 1, paddingBottom: 48 }}>
+      <FadeBox>
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#898989"
+          placeholder="Ad"
+          value={firstName}
+          onChangeText={setFirstName}
+          returnKeyType="next"
+          onSubmitEditing={() => lastNameRef.current.focus()}
+          autoFocus
         />
+      </FadeBox>
 
-        <CheckButton
-          text="Erkek"
-          onPress={() => setGender('male')}
-          isActive={gender === 'male'}
+      <View style={{ marginTop: 12 }} />
+
+      <FadeBox delay={100}>
+        <TextInput
+          ref={lastNameRef}
+          style={styles.input}
+          placeholderTextColor="#898989"
+          placeholder="Soyad"
+          value={lastName}
+          onChangeText={setLastName}
         />
-      </View>
+      </FadeBox>
 
       <View style={{ marginTop: 12 }} />
 
-      <MaskInput
-        style={styles.input}
-        placeholderTextColor="#898989"
-        placeholder="Doğum Tarihi"
-        value={birthDate}
-        onChangeText={setBirthDate}
-        mask={[
-          /\d/,
-          /\d/,
-          ' ',
-          '/',
-          ' ',
-          /\d/,
-          /\d/,
-          ' ',
-          '/',
-          ' ',
-          /\d/,
-          /\d/,
-          /\d/,
-          /\d/
-        ]}
-        keyboardType="numeric"
-      />
+      <FadeBox delay={200}>
+        <View
+          style={{
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+          }}
+        >
+          <CheckButton
+            text="Kadın"
+            onPress={() => setGender('female')}
+            isActive={gender === 'female'}
+          />
+
+          <CheckButton
+            text="Erkek"
+            onPress={() => setGender('male')}
+            isActive={gender === 'male'}
+          />
+        </View>
+      </FadeBox>
 
       <View style={{ marginTop: 12 }} />
 
-      <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
-        <Text style={styles.submitButtonText}>Analizi Başlat</Text>
-      </TouchableOpacity>
+      <FadeBox delay={300}>
+        <MaskInput
+          style={styles.input}
+          placeholderTextColor="#898989"
+          placeholder="Doğum Tarihi"
+          value={birthDate}
+          onChangeText={setBirthDate}
+          mask={[
+            /\d/,
+            /\d/,
+            ' ',
+            '/',
+            ' ',
+            /\d/,
+            /\d/,
+            ' ',
+            '/',
+            ' ',
+            /\d/,
+            /\d/,
+            /\d/,
+            /\d/
+          ]}
+          keyboardType="numeric"
+        />
+      </FadeBox>
+
+      <View style={{ marginTop: 12 }} />
+
+      <FadeBox delay={800}>
+        <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
+          <Text style={styles.submitButtonText}>Analizi Başlat</Text>
+        </TouchableOpacity>
+      </FadeBox>
     </View>
   )
 }

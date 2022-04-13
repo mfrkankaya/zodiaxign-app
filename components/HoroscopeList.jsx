@@ -14,8 +14,8 @@ export default function HoroscopeList() {
         paddingVertical: 16
       }}
     >
-      {HOROSCOPES.map((horoscope) => (
-        <HoroscopeListItem key={horoscope.slug} {...horoscope} />
+      {HOROSCOPES.map((horoscope, index) => (
+        <HoroscopeListItem key={horoscope.slug} {...horoscope} index={index} />
       ))}
     </View>
   )

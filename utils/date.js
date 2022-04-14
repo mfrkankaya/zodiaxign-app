@@ -19,9 +19,10 @@ export const validateBirthDate = (birthDate) => {
   const yearInt = parseInt(year)
   const today = new Date()
 
-  if (yearInt > today.getFullYear())
-    return 'Yıl bilgisi ileri bir tarihten olamaz.'
-  if (monthInt > 12) return 'Ay bilgisi 1 ile 12 arasında bir değer olmalı.'
-  if (dayInt > 31) return 'Gün bilgisi 1 ile 31 arasında bir değer olmalı.'
+  if (yearInt > today.getFullYear()) return 'Gelecekte doğmuş olamazsınız.'
+  if (monthInt > 12 || monthInt <= 0)
+    return 'Ay bilgisi 1 ile 12 arasında bir değer olmalı.'
+  if (dayInt > 31 || dayInt <= 0)
+    return 'Gün bilgisi 1 ile 31 arasında bir değer olmalı.'
   return ''
 }

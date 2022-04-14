@@ -5,12 +5,19 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Text
+  Text,
+  Alert
 } from 'react-native'
 import MaskInput from 'react-native-mask-input'
 import { primary } from '../constants/colors'
 import { calculateAge, validateBirthDate } from '../utils'
 import FadeBox from './FadeBox'
+
+const showValidationError = (error) => {
+  Alert.alert('Form Hatası', error, [{ text: 'Tamam', style: 'cancel' }], {
+    cancelable: true
+  })
+}
 
 const CheckButton = ({ onPress, isActive, text }) => {
   return (
@@ -30,44 +37,47 @@ const CheckButton = ({ onPress, isActive, text }) => {
   )
 }
 
+const INITIAL_STATE = { firstName: '', lastName: '', gender: '', birthDate: '' }
+
 const AnalysisForm = () => {
   const lastNameRef = useRef(null)
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [gender, setGender] = useState('')
-  const [birthDate, setBirthDate] = useState('')
+  const [user, setUser] = useState({ ...INITIAL_STATE })
   const { navigate } = useNavigation()
+  const { firstName, lastName, gender, birthDate } = user
+
+  const handleFieldChange = (name) => (value) =>
+    setUser((user) => ({ ...user, [name]: value }))
 
   const checkFormValidation = () => {
     if (!firstName) {
-      alert('Lütfen adınızı girin.')
+      showValidationError('Adınızı girmeyi unuttunuz.')
       return false
     }
 
     if (!lastName) {
-      alert('Lütfen soyadınızı girin.')
+      showValidationError('Soyadınızı girmeyi unuttunuz.')
       return false
     }
 
     if (!gender) {
-      alert('Lütfen cinsiyetinizi seçin.')
+      showValidationError('Cinsiyetinizi belirtmeyi unuttunuz.')
       return false
     }
 
     if (!birthDate) {
-      alert('Lütfen doğum tarihinizi girin.')
+      showValidationError('Doğum tarihinizi girmeyi unuttunuz.')
       return false
     }
 
     if (birthDate.length < 14) {
-      alert('Lütfen doğum tarihinizi girdiğinizden emin olun.')
+      showValidationError('Doğum tarihiniz eksik görünüyor.')
       return false
     }
 
     const birthDateError = validateBirthDate(birthDate)
 
     if (birthDateError) {
-      alert(birthDateError)
+      showValidationError(birthDateError)
       return false
     }
 
@@ -76,6 +86,7 @@ const AnalysisForm = () => {
 
   const handleSubmit = () => {
     if (!checkFormValidation()) return
+    setUser({ ...INITIAL_STATE })
     navigate('AnalysisResultScreen', {
       firstName,
       lastName,
@@ -85,14 +96,14 @@ const AnalysisForm = () => {
   }
 
   return (
-    <View style={{ flex: 1, paddingBottom: 48 }}>
+    <View style={{ flex: 1, paddingBottom: 48, paddingTop: 24 }}>
       <FadeBox>
         <TextInput
           style={styles.input}
           placeholderTextColor="#898989"
           placeholder="Ad"
           value={firstName}
-          onChangeText={setFirstName}
+          onChangeText={handleFieldChange('firstName')}
           returnKeyType="next"
           onSubmitEditing={() => lastNameRef.current.focus()}
           autoFocus
@@ -108,7 +119,7 @@ const AnalysisForm = () => {
           placeholderTextColor="#898989"
           placeholder="Soyad"
           value={lastName}
-          onChangeText={setLastName}
+          onChangeText={handleFieldChange('lastName')}
         />
       </FadeBox>
 
@@ -124,13 +135,13 @@ const AnalysisForm = () => {
         >
           <CheckButton
             text="Kadın"
-            onPress={() => setGender('female')}
+            onPress={() => handleFieldChange('gender')('female')}
             isActive={gender === 'female'}
           />
 
           <CheckButton
             text="Erkek"
-            onPress={() => setGender('male')}
+            onPress={() => handleFieldChange('gender')('male')}
             isActive={gender === 'male'}
           />
         </View>
@@ -144,7 +155,7 @@ const AnalysisForm = () => {
           placeholderTextColor="#898989"
           placeholder="Doğum Tarihi"
           value={birthDate}
-          onChangeText={setBirthDate}
+          onChangeText={handleFieldChange('birthDate')}
           mask={[
             /\d/,
             /\d/,

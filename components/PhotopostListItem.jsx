@@ -6,17 +6,11 @@ import { nanoid } from 'nanoid/non-secure'
 import { getImageSize, PHOTOPOST_WIDTH } from '../utils/image'
 import { primary } from '../constants/colors'
 import { Ionicons } from '@expo/vector-icons'
+import useImageSize from '../hooks/useImageSize'
 
 const PhotopostListItem = ({ url }) => {
   const imageUri = useRef('')
-  const [size, setSize] = useState({
-    width: PHOTOPOST_WIDTH,
-    height: PHOTOPOST_WIDTH
-  })
-
-  useEffect(() => {
-    getImageSize(url).then(setSize)
-  }, [])
+  const imageSize = useImageSize(url)
 
   const share = async () => {
     const downloadResumable = FileSystem.createDownloadResumable(
@@ -49,7 +43,7 @@ const PhotopostListItem = ({ url }) => {
       >
         <Image
           source={{ uri: url }}
-          style={{ ...size, borderRadius: 24, marginBottom: 12 }}
+          style={{ ...imageSize, borderRadius: 24, marginBottom: 12 }}
           resizeMode="contain"
         />
         <TouchableOpacity

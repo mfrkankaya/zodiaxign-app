@@ -55,7 +55,7 @@ const Navigation = () => {
       >
         <Tabs.Screen name="HomeStack" component={HomeStack} />
         <Tabs.Screen name="AnalysisStack" component={AnalysisStack} />
-        <Tabs.Screen name="PhotopostsStack" component={PhotopostsStack} />
+        {/* <Tabs.Screen name="PhotopostsStack" component={PhotopostsStack} /> */}
       </Tabs.Navigator>
     </NavigationContainer>
   )
